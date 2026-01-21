@@ -3,23 +3,9 @@ import '@/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Menu, X, ArrowRight, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
-import axios from 'axios';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId) => {
@@ -28,26 +14,6 @@ const Home = () => {
       element.scrollIntoView({ behavior: 'smooth' });
       setIsMenuOpen(false);
     }
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      await axios.post(`${API}/contact`, formData);
-      toast.success('Message sent successfully! We\'ll get back to you soon.');
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (error) {
-      toast.error('Failed to send message. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Close menu on scroll
@@ -137,17 +103,10 @@ const Home = () => {
                 ))}
               </ul>
               
-              {/* Sign In Button */}
-              <Button 
-                className="w-full mt-8 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl transition-colors duration-200"
-                data-testid="sign-in-btn"
-              >
-                Sign In
-              </Button>
-              
               {/* Welcome Message */}
-              <div className="mt-6 p-4 bg-teal-50 rounded-xl text-center">
+              <div className="mt-12 p-4 bg-teal-50 rounded-xl text-center">
                 <p className="text-teal-800 font-medium">Welcome to JEXLA</p>
+                <p className="text-sm text-teal-600 mt-1">Excellence & Automation</p>
               </div>
             </nav>
           </div>
@@ -318,14 +277,14 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Get In Touch */}
+        {/* Contact Information */}
         <section id="contact" className="py-16 px-4 bg-gray-50">
           <div className="container mx-auto">
             <div className="fade-in-section">
               <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Get In Touch</h2>
               
               {/* Contact Info Cards */}
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 {[
                   {
                     title: 'Email Us',
@@ -357,60 +316,12 @@ const Home = () => {
                 ))}
               </div>
               
-              {/* Contact Form */}
-              <div className="max-w-2xl mx-auto">
-                <div className="bg-white rounded-2xl p-8 shadow-lg">
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-6">Send Us a Message</h3>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <Input
-                      name="name"
-                      placeholder="Full Name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      data-testid="contact-name-input"
-                      className="rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500"
-                    />
-                    <Input
-                      name="email"
-                      type="email"
-                      placeholder="Email Address"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      data-testid="contact-email-input"
-                      className="rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500"
-                    />
-                    <Input
-                      name="phone"
-                      type="tel"
-                      placeholder="Phone Number"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      required
-                      data-testid="contact-phone-input"
-                      className="rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500"
-                    />
-                    <Textarea
-                      name="message"
-                      placeholder="Message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={5}
-                      data-testid="contact-message-input"
-                      className="rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 resize-none"
-                    />
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      data-testid="send-message-btn"
-                      className="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl transition-all duration-200 hover:shadow-lg disabled:opacity-50"
-                    >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
-                    </Button>
-                  </form>
-                </div>
+              <div className="text-center mt-12">
+                <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                  We're here to help you transform your business with our innovative automation solutions. 
+                  Reach out to us through any of the channels above, and let's discuss how JEXLA Group 
+                  can drive excellence and automation in your industry.
+                </p>
               </div>
             </div>
           </div>
